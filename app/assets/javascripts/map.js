@@ -153,9 +153,9 @@ $(document).ready(function() {
   });
 
   $('#name_auto_complete').blur(function() {
-    fillLatLng();
+    fillLatLngandId();
   });
-
+  // found out what source does
   function callFoursquareForTypeahead() {
     $('#name_auto_complete').typeahead({
         minLength: 3,
@@ -165,7 +165,7 @@ $(document).ready(function() {
         }
     });
   }
-
+  // find out what _map does
   function venueNames() {
     return _.map(venues, function(venue) { return displayName(venue) });
   }
@@ -185,15 +185,16 @@ $(document).ready(function() {
     });
   };
 
-  function fillLatLng() {
-    venueLatLng(venues);
+  function fillLatLngandId() {
+    venueLatLngandId(venues);
   }
-
-  function venueLatLng(venues) {
+  // what does this funtion do
+  function venueLatLngandId(venues) {
     _.each(venues, function(venue){
       if (displayName(venue) == $('#name_auto_complete').val()) {
         $("#latitude-field").val(venue.location.lat);
         $("#longitude-field").val(venue.location.lng);
+        $("#venue-id").val(venue.id);
       };
     })
   }
