@@ -1,5 +1,8 @@
 $(document).ready(function() {
 
+  var clientid = "F2TFZIIG0IVCY4UU3XZPMMK0YG5XKL5LDPSGWO3KRZWUD2GT";
+  var clientsec = "EKTERA4XDUW5M1WLU4NT2V3ARPAQTHL4P1AENIHIZ1ZJHDVJ";
+
   $("#sidebar").hide();
 
 // display map
@@ -15,7 +18,7 @@ $(document).ready(function() {
   }
 
 //create map $$$$ end
-// validation of restaurant form
+// validation of restaurant form  
 
   $('#submit').click(function (e) {
     if (nameValidation() == false ) {
@@ -65,8 +68,23 @@ $(document).ready(function() {
       var collection = createGeoJsonCollection(data);
          group.clearLayers();
          group.addData(collection);
+         getVenuePhotos(data[0].venue_id);
       ;}
   });
+
+  function getVenuePhotos(v_id) {
+    id = String(v_id);
+    $.get("https://api.foursquare.com/v2/venues/"+id+"/photos?&client_id=" + clientid +"&client_secret="+clientsec, function(json){
+        returnEachPhoto(json);
+    });
+  }
+
+  function returnEachPhoto(photos_json) {
+   var first_photo = photos_json.response.photos.groups[1].items[1]
+   // var div = document.getElementById('photos')
+    $('#photos').html("<img class=photo src="+ first_photo.url + " width=300 height=300 >");
+  }
+
 
   function createGeoJsonCollection(array){
     json_array = []
@@ -146,8 +164,7 @@ $(document).ready(function() {
 // show diets $$$$ end
 // foursquare venues
 
-  var clientid = "F2TFZIIG0IVCY4UU3XZPMMK0YG5XKL5LDPSGWO3KRZWUD2GT";
-  var clientsec = "EKTERA4XDUW5M1WLU4NT2V3ARPAQTHL4P1AENIHIZ1ZJHDVJ";
+
 
  $('#name_auto_complete').keyup(function() {callFoursquareForTypeahead();
   });
