@@ -5,6 +5,7 @@ class MapController < ApplicationController
   def show
     @restaurant = Restaurant.new
     @diets = Diet.all
+    @restaurants = Restaurant.all
   end
 
 end

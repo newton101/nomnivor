@@ -68,23 +68,26 @@ $(document).ready(function() {
       var collection = createGeoJsonCollection(data);
          group.clearLayers();
          group.addData(collection);
-         getVenuePhotos(data[0].venue_id);
+         renderAllPhotos(data);
       ;}
-  });
+  }); 
 
-  function getVenuePhotos(v_id) {
-    id = String(v_id);
-    $.get("https://api.foursquare.com/v2/venues/"+id+"/photos?&client_id=" + clientid +"&client_secret="+clientsec, function(json){
-        returnEachPhoto(json);
+  function renderAllPhotos(restaurants){
+    $.each(restaurants, function(index, restaurant){
+        getVenuePhotos(restaurant.venue_id);
+
     });
   }
 
-  function returnEachPhoto(photos_json) {
-   var first_photo = photos_json.response.photos.groups[1].items[1]
-   // var div = document.getElementById('photos')
-    $('#photos').html("<img class=photo src="+ first_photo.url + " width=300 height=300 >");
+  function getVenuePhotos(venue_id) {
+  $.get("https://api.foursquare.com/v2/venues/"+venue_id+"/photos?&client_id=" + clientid +"&client_secret="+clientsec, function(json){
+      first_photo = json.response.photos.groups[1].items[1];
+      $('#results .card[data-id='+venue_id+']').append("<img class=photo src="+ first_photo.url + " " + "width=100 height=100>");
+      });  
+    
   }
 
+ 
 
   function createGeoJsonCollection(array){
     json_array = []

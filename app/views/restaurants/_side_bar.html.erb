@@ -1,4 +1,4 @@
-<div id="sidebar">
+<div id="filterBar">
   <%= form_tag("/restaurants", :method => "get", :class => "diets-filter") do %>
     <ul class="inline-checkboxes">
 
@@ -12,3 +12,23 @@
       <%= submit_tag("Find restaurants", :class => "sidebar-submit")%>
   <% end %>
 </div>
+   <div id="resultsContainer">
+      <div id="resultsView">
+        <div id="results">
+          <ul class="recommendationList">
+            <% @restaurants.each do |restaurant| %>
+            <li class="card" data-id=<%= restaurant.venue_id %>>
+              <div class="restaurantBlock">
+                <%= restaurant.name %>
+              </div>
+              <div class="photoContainer">
+              </div>
+              <div class="cardDetails">
+                <%= restaurant.description %>
+              </div>
+            </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
