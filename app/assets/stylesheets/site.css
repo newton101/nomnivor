@@ -17,8 +17,8 @@ body {
     font-weight: bold;
 }
 
-#sidebar {
-    list-style: none;
+#filterBar {
+/*    list-style: none;
     height: 512px;
     width: 129px;
     float: left;
@@ -32,7 +32,16 @@ body {
     z-index: 10;
     box-shadow: 0px 0px 5px 0px;
     margin-top: 160px;
-    border-radius: 8px;
+    border-radius: 8px;*/
+
+    border: 2px solid rgb(224, 224, 224);
+    margin-top: 70px;
+    left: 20px;
+    position: relative;
+    top: 0;
+    background-color: #fff;
+    width: 475px;
+    z-index: 314159265;
 }
 
 .sidebar-submit {
@@ -58,8 +67,16 @@ body {
   padding: 7px 8px 7px 8px;
 }
 
-.inline-checkboxes li {
+.inline-checkboxes {
     list-style: none;
+    margin: 0;
+   /* overflow: hidden;*/
+    padding: 0;
+
+}
+
+.inline-checkboxes li {
+/*    list-style: none;
     width: 10px;
     margin-right: 80px;
     float: left;
@@ -67,10 +84,31 @@ body {
     font-size: 18px;
     font-weight: bold;
     font-family: 'helvetica neue', arial, sans-serif;
-    float:left;
+    float:left;*/
+
+    float: left;
+    margin: 0 4px 4px 0;
+    position: relative;
 }
 
-
+.inline-checkboxes li span {
+  background: #f3f3f3;
+border: solid 1px #dcdcdc;
+color: #6e6e6e;
+cursor: pointer;
+display: inline-block;
+font-size: 11px;
+font-weight: bold;
+margin: 0;
+padding: 4px 8px;
+position: relative;
+text-decoration: none;
+text-shadow: 0 1px 0 #fff;
+vertical-align: middle;
+-moz-border-radius: 2px;
+-webkit-border-radius: 2px;
+border-radius: 2px;
+}
 
 .filter_button {
      background-color: #d43638;
@@ -101,7 +139,25 @@ body {
 
 #resultsContainer {
   width: 500px;
+  position: relative;
+  z-index: 2;
 
+}
+
+.recommendationList {
+  list-style: none;
+  margin: 0 0 0px 12px;
+}
+
+#resultsView {
+background: #ccc;
+background: rgba(0, 0, 0, 0.2);
+padding: 10px 10px 1px;
+position: relative;
+z-index: 50;
+-moz-box-shadow: inset rgba(0, 0, 0, 0.1) 0 0 2px 0px;
+-webkit-box-shadow: inset rgba(0, 0, 0, 0.1) 0 0 2px 0px;
+box-shadow: inset rgba(0, 0, 0, 0.1) 0 0 2px 0px;
 }
 
 #resultsView li.card {
@@ -109,3 +165,28 @@ body {
   margin-bottom: 10px;
   padding: 10px;
 }
+
+
+
+#resultsView .photoContainer {
+cursor: pointer;
+line-height: 0;
+/*position: absolute;*/
+right: 5px;
+top: 5px;
+}
+
+#resultsView .photoContainer img {
+height: 100px;
+width: 100px;
+border: 1px solid #e3e3e3;
+background: #fff;
+padding: 3px;
+-moz-box-shadow: rgba(0, 0, 0, 0.1) 0 0 2px 0px;
+-webkit-box-shadow: rgba(0, 0, 0, 0.1) 0 0 2px 0px;
+box-shadow: rgba(0, 0, 0, 0.1) 0 0 2px 0px;
+-moz-border-radius: 2px;
+-webkit-border-radius: 2px;
+border-radius: 2px;
+}
+

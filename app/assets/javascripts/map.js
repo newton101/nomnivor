@@ -3,7 +3,8 @@ $(document).ready(function() {
   var clientid = "F2TFZIIG0IVCY4UU3XZPMMK0YG5XKL5LDPSGWO3KRZWUD2GT";
   var clientsec = "EKTERA4XDUW5M1WLU4NT2V3ARPAQTHL4P1AENIHIZ1ZJHDVJ";
 
-  $("#sidebar").hide();
+  $("#filterBar").hide();
+  $("#resultsContainer").hide();
 
 // display map
 
@@ -80,11 +81,12 @@ $(document).ready(function() {
   }
 
   function getVenuePhotos(venue_id) {
-  $.get("https://api.foursquare.com/v2/venues/"+venue_id+"/photos?&client_id=" + clientid +"&client_secret="+clientsec, function(json){
-      first_photo = json.response.photos.groups[1].items[1];
-      $('#results .card[data-id='+venue_id+']').append("<img class=photo src="+ first_photo.url + " " + "width=100 height=100>");
-      });  
-    
+    $.get("https://api.foursquare.com/v2/venues/"+venue_id+"/photos?&client_id=" + clientid +"&client_secret="+clientsec, function(json){
+        if (json.response.photos.summary != "No photos") {
+            first_photo = json.response.photos.groups[1].items[1]; 
+            $('#results .card[data-id='+venue_id+'] > .photoContainer').append("<img class=photo src="+ first_photo.url + " " + "width=100 height=100>");       
+        }
+    });  
   }
 
  
@@ -228,7 +230,8 @@ $(document).ready(function() {
       map.setView(e.latlng, 15);
     });
     $(".landing").hide('fast');
-    $("#sidebar").show('slow');
+    $("#filterBar").show('slow');
+    $("#resultsContainer").show('slow');
   });
 
   function current_location() {
@@ -241,7 +244,6 @@ $(document).ready(function() {
 
   $(".close").click(function() {
     $(".landing").hide('fast');
-    $("#sidebar").show('slow');
   });
 
 // close hero unit $$$$ end
@@ -288,8 +290,8 @@ $(document).ready(function() {
       success: function(data){
         map.setView([data.latitude, data.longitude], 15);
         $(".landing").hide('fast');
-          $("#sidebar").show('slow');
-
+        $("#filterBar").show('slow');
+        $("#resultsContainer").show('slow');
         }
     });
   });
@@ -303,7 +305,8 @@ $(document).ready(function() {
       success: function(data){
         map.setView([data.latitude, data.longitude], 15);
         $(".landing").hide('fast');
-          $("#sidebar").show('slow');
+        $("#filterBar").show('slow');
+        $("#resultsContainer").show('slow');
 
         }
     });
