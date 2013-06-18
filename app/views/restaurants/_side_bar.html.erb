@@ -19,14 +19,14 @@
         <div id="results">
           <ul class="recommendationList">
             <% @restaurants.each do |restaurant| %>
-            <li class="card" data-id=<%= restaurant.venue_id %>>
+            <li class="card" data-id=<% restaurant.venue_id %>>
               <div class="restaurantBlock">
-                <%= restaurant.name %>
+                <% restaurant.name %>
               </div>
               <div class="photoContainer">
               </div>
               <div class="cardDetails">
-                <%= restaurant.description %>
+                <% restaurant.description %>
               </div>
             </li>
             <% end %>

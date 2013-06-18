@@ -3,8 +3,8 @@ $(document).ready(function() {
   var clientid = "F2TFZIIG0IVCY4UU3XZPMMK0YG5XKL5LDPSGWO3KRZWUD2GT";
   var clientsec = "EKTERA4XDUW5M1WLU4NT2V3ARPAQTHL4P1AENIHIZ1ZJHDVJ";
 
-  $("#filterBar").hide();
-  $("#resultsContainer").hide();
+  // $("#filterBar").hide();
+  // $("#resultsContainer").hide();
 
 // display map
 
@@ -74,10 +74,37 @@ $(document).ready(function() {
   }); 
 
   function renderAllPhotos(restaurants){
+    var i = getVenueIds(restaurants);
+    setDataIdsAttribute(i);
     $.each(restaurants, function(index, restaurant){
+        getRestaurant(restaurant.name, restaurant.description, restaurant.venue_id);
         getVenuePhotos(restaurant.venue_id);
-
+        
     });
+  }
+
+  function getVenueIds(restaurants) {
+    var ids = []
+    $.each(restaurants, function(index, restaurant){
+        ids.push(restaurant.venue_id);
+    });
+    return ids;
+  }
+
+  function setDataIdsAttribute(array) {
+    $.each(array, function(numi, num){
+        $('#results .card').each(function(ei, e){      
+            if (numi == ei && $(e).attr('data-id') == "") {
+            $(e).attr('data-id', num);
+            }    
+        });
+    });
+  }
+
+  function getRestaurant(name, description, id) {
+
+    $(".restaurantBlock").append(name);
+    $(".cardDetails").append(description);
   }
 
   function getVenuePhotos(venue_id) {
