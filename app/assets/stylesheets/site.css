@@ -268,4 +268,6 @@ border-radius: 2px;
   color: #d43638;
   margin: 25px;
   font-family: 'Helvetica Neue', Helvetica, Verdana, Arial, sans-serif;
+  background-color: rgba(0, 0, 0, 0.027451);
+  padding: 15px;
 }

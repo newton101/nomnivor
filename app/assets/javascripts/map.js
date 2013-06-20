@@ -5,6 +5,7 @@ $(document).ready(function() {
 
   // $("#filterBar").hide();
   $("#resultsContainer").hide();
+  $(".navbar-form").hide();
 
 // display map
 
@@ -144,9 +145,6 @@ $(document).ready(function() {
             img.height = '100';
 
 
-            // var card = document.getElementById(venue_id);
-            // card.setAttribute('data-id', "");
-
             var t = document.getElementById(venue_id);
             var td = $(t).attr('id');
             console.log(t);
@@ -171,36 +169,8 @@ $(document).ready(function() {
     return json_array;
   };
 
-  function addMarker(item) {
-
-    var geoJson = [{
-      type: 'Feature',
-      "geometry": { "type": "Point", "coordinates": [item.latitude, item.longitude]},
-      "properties": {
-      "url": "/",
-      "title": item.name,
-      "description": item.description
-      }
-    }];
-    map.markerLayer.setGeoJSON(geoJson);
-    map.markerLayer.on('ready', function(e) {
-      this.eachLayer(function(marker) {
-
-// add markers and filter them $$$$ end
-// add popup content
-
-        var feature = marker.feature;
-        var popupContent =  '<a target="_blank" class="popup" href="' + feature.properties.url + '">' + '<div>' + feature.properties.name + '</div>' + '</a>' + '<p>' +feature.properties.description + '</p>' + '<p>' + '<strong>' + 'Lat/Long:' + '</strong>' + " " + feature.geometry.coordinates + '</p>';
-        marker.bindPopup(popupContent,{
-          closeButton: true,
-          minWidth: 320
-        });
-      });
-    });
-  }
 
 // add popup content $$$$ end
-// show diets
 
   var group = L.geoJson(null, {
     style: null,
@@ -208,6 +178,14 @@ $(document).ready(function() {
       layer.bindPopup("<p>"+"<strong>"+feature.properties.title+"</strong></p><p>"+feature.properties.description+"</p><p>"+ eachDietName(feature.properties.diets)+"</p>");
     }
   }).addTo(map);
+
+    group.on('mouseover', function(e) {
+       e.layer.openPopup();
+    });
+  
+    group.on('mouseout', function(e) {
+       e.layer.closePopup();
+    });
 
   function eachDietName(diets){
     var dietsString = ''
@@ -376,8 +354,10 @@ $(document).ready(function() {
         renderAllPhotos(restaurants);
 
         $(".landing").hide('fast');
+        $(".navbar-form").show('fast');
 
         $("#resultsContainer").show('fast');
+
         }
        
     });
