@@ -4,7 +4,7 @@ $(document).ready(function() {
   var clientsec = "EKTERA4XDUW5M1WLU4NT2V3ARPAQTHL4P1AENIHIZ1ZJHDVJ";
 
   // $("#filterBar").hide();
-  // $("#resultsContainer").hide();
+  $("#resultsContainer").hide();
 
 // display map
 
@@ -61,26 +61,28 @@ $(document).ready(function() {
 // validation of restaurant form $$$$ end
 // add markers and filter them
 
-  $.ajax({
-    type: "GET",
-    url: "/restaurants/",
-    data: $(this).serialize(),
-    success: function(data){
-      var collection = createGeoJsonCollection(data);
-         group.clearLayers();
-         group.addData(collection);
-         renderAllPhotos(data);
-      ;}
-  }); 
+  // $.ajax({
+  //   type: "GET",
+  //   url: "/restaurants/",
+  //   data: $(this).serialize(),
+  //   success: function(data){
+  //     var collection = createGeoJsonCollection(data);
+  //        group.clearLayers();
+  //        group.addData(collection);
+  //        // renderAllPhotos(data);
+  //     ;}
+  // }); 
 
   function renderAllPhotos(restaurants){
     var i = getVenueIds(restaurants);
-    setDataIdsAttribute(i);
+    
     $.each(restaurants, function(index, restaurant){
-        getRestaurant(restaurant.name, restaurant.description, restaurant.venue_id);
+        createRestaurantCard(restaurant.name, restaurant.description);
         getVenuePhotos(restaurant.venue_id);
         
     });
+
+    setDataIdsAttribute(i);
   }
 
   function getVenueIds(restaurants) {
@@ -101,17 +103,55 @@ $(document).ready(function() {
     });
   }
 
-  function getRestaurant(name, description, id) {
+  // needs major refactoring and now needs
+  // to prevent duplicate cards being created for same 
+  // venue check for data-id attribute match
+  function createRestaurantCard(name, description) {
+      var card = document.createElement('li');
+      card.className = "card";
+      card.setAttribute('data-id', "");
 
-    $(".restaurantBlock").append(name);
-    $(".cardDetails").append(description);
+      var photoContainer = document.createElement('div');
+      photoContainer.className = "photoContainer";
+      card.appendChild(photoContainer);
+
+      var restaurantBlock = document.createElement('div');
+      restaurantBlock.className = "restaurantBlock";
+      $(restaurantBlock).append(name);
+      card.appendChild(restaurantBlock);
+
+      var cardDetails = document.createElement('div');
+      cardDetails.className = "cardDetails";
+      $(cardDetails).append(description);
+      card.appendChild(cardDetails);
+
+      $(".recommendationList").append(card);
   }
+
 
   function getVenuePhotos(venue_id) {
     $.get("https://api.foursquare.com/v2/venues/"+venue_id+"/photos?&client_id=" + clientid +"&client_secret="+clientsec, function(json){
         if (json.response.photos.summary != "No photos") {
             first_photo = json.response.photos.groups[1].items[1]; 
-            $('#results .card[data-id='+venue_id+'] > .photoContainer').append("<img class=photo src="+ first_photo.url + " " + "width=100 height=100>");       
+
+            var img = document.createElement('img');
+            img.className = 'photo';
+            img.id = venue_id;
+            img.src = first_photo.url;
+            img.width = '100';
+            img.height = '100';
+
+
+            // var card = document.getElementById(venue_id);
+            // card.setAttribute('data-id', "");
+
+            var t = document.getElementById(venue_id);
+            var td = $(t).attr('id');
+            console.log(t);
+            console.log(td);
+            if (t == null && td != venue_id) {
+              $('#results .card[data-id='+venue_id+'] > .photoContainer').append(img); 
+            }
         }
     });  
   }
@@ -175,6 +215,12 @@ $(document).ready(function() {
     return dietsString.substring(0, dietsString.lastIndexOf(', '));
   }
 
+  function setMarkers(data) {
+    var collection = createGeoJsonCollection(data);
+           group.clearLayers();
+           group.addData(collection);
+  }
+
   // filter diets
 
   $(".diets-filter").submit(function(e){
@@ -184,9 +230,10 @@ $(document).ready(function() {
       url: "/restaurants/",
       data: $(this).serialize(),
       success: function(data){
-        var collection = createGeoJsonCollection(data);
-           group.clearLayers();
-           group.addData(collection);
+        setMarkers(data);
+        renderAllPhotos(data);
+
+        
         }
     });
   });
@@ -257,7 +304,7 @@ $(document).ready(function() {
       map.setView(e.latlng, 15);
     });
     $(".landing").hide('fast');
-    $("#filterBar").show('slow');
+    // $("#filterBar").show('slow');
     $("#resultsContainer").show('slow');
   });
 
@@ -313,15 +360,29 @@ $(document).ready(function() {
     $.ajax({
       type: "GET",
       url: "/locations/",
-      data: {"address": $("#bar_search_term").val()},
+      data: {"address": $("#bar_search_term").val(), "diets": checkedDiets()},
       success: function(data){
-        map.setView([data.latitude, data.longitude], 15);
+        var restaurants = data[1];
+        var location = data[0];
+        map.setView([location.latitude, location.longitude], 10);
+        setMarkers(restaurants);
+        renderAllPhotos(restaurants);
+
         $(".landing").hide('fast');
-        $("#filterBar").show('slow');
-        $("#resultsContainer").show('slow');
+        // $("#filterBar").show('slow');
+        $("#resultsContainer").show('fast');
         }
+       
     });
   });
+
+   function checkedDiets() {         
+     var allVals = [];
+     $(':checked').each(function() {
+       allVals.push($(this).val());
+     });
+     return allVals;
+  }
 
   $(".navbar-form").submit(function(e) {
     e.preventDefault();
@@ -330,10 +391,14 @@ $(document).ready(function() {
       url: "/locations/",
       data: {"address": $("#search_term").val()},
       success: function(data){
+      
         map.setView([data.latitude, data.longitude], 15);
+
         $(".landing").hide('fast');
-        $("#filterBar").show('slow');
+
+        // $("#filterBar").show('slow');
         $("#resultsContainer").show('slow');
+        // renderAllPhotos(data);
 
         }
     });

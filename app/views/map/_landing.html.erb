@@ -14,6 +14,22 @@
       <button role="button" class="find_me" id="find_current_location" title="Find my location">
       </button>
       <input type="text" class="nav-search-field" method="get" placeholder="Old Street, London" id="bar_search_term">
+
+      <div id="filterBar">
+        <h5 class=filterHeader>Filter restaurants by diet: </h5>
+     
+          <ul class="inline-checkboxes">
+           <% Diet.all.each do |diet| %>
+           <li>
+              <span>
+              <%= check_box_tag "diets[]", diet.id %>
+              <%= label_tag "#{diet.name}" %>
+              </span>
+           </li>
+          <% end %>
+          </ul>
+   
+
       <button type="submit" class="find_button find_location_button" id="geolocate">
       Find location
       </button>

@@ -111,7 +111,7 @@ border-radius: 2px;
 }
 
 .filter_button {
-     background-color: #d43638;
+  background-color: #d43638;
   background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#eb5367), to(#d43638), color-stop(0.5, #e04751), color-stop(0.5, #de404a));
   background-image: -moz-linear-gradient(top, #eb5367, #e04751 50%, #de404a 50%, #d43638);
   background-image: -o-linear-gradient(top, #eb5367, #e04751 50%, #de404a 50%, #d43638);
