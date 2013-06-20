@@ -20,20 +20,9 @@
       </button>
 
       <div class="filterBar" id="filterBar-landing">
-        <h5 class=filterHeader>Filter restaurants by diet: </h5>
-     
-          <ul class="inline-checkboxes">
-           <% Diet.all.each do |diet| %>
-           <li>
-              <span>
-              <%= check_box_tag "diets[]", diet.id %>
-              <%= label_tag "#{diet.name}" %>
-              </span>
-           </li>
-          <% end %>
-          </ul>
-   
+        <h5 class=filterHeader>Filter by diet: </h5>
+        <% diets_array = Diet.all.map { |city| [city.name, city.id] } %>
+        <%= select_tag("diets[]", options_for_select(diets_array),:class => 'multiselect',:multiple => 'multiple') %>
 
-     
     </form>
   </div>

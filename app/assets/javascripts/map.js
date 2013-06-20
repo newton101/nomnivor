@@ -335,25 +335,28 @@ $(document).ready(function() {
 
   //Automcomplete using Gmaps $$$$ end
 
-  $('.multiselect').multiselect({
-    buttonClass: 'btn',
-    buttonWidth: 'auto',
-    buttonText: function(options) {
-      if (options.length == 0) {
-        return 'None selected <b class="caret"></b>';
-      }
-      else if (options.length > 6) {
-        return options.length + ' selected  <b class="caret"></b>';
-      }
-      else {
-        var selected = '';
+    $('.multiselect').multiselect({
+      buttonClass: 'btn',
+      buttonWidth: 'auto',
+      buttonContainer: '<div class="btn-group" />',
+      maxHeight: 150,
+      buttonText: function(options) {
+        if (options.length == 0) {
+          return 'None selected <b class="caret"></b>';
+        }
+        else if (options.length > 3) {
+          return options.length + ' selected  <b class="caret"></b>';
+        }
+        else {
+          var selected = '';
           options.each(function() {
             selected += $(this).text() + ', ';
           });
-        return selected.substr(0, selected.length -2) + '<b class="caret"></b>';
+          return selected.substr(0, selected.length -2) + ' <b class="caret"></b>';
+        }
       }
-    }
-  });
+    });
+
 
   // Actual search using geolocate GEM (see controller)
 
