@@ -111,14 +111,16 @@ $(document).ready(function() {
       card.className = "card";
       card.setAttribute('data-id', "");
 
-      var photoContainer = document.createElement('div');
-      photoContainer.className = "photoContainer";
-      card.appendChild(photoContainer);
-
       var restaurantBlock = document.createElement('div');
       restaurantBlock.className = "restaurantBlock";
       $(restaurantBlock).append(name);
       card.appendChild(restaurantBlock);
+
+      var photoContainer = document.createElement('div');
+      photoContainer.className = "photoContainer";
+      card.appendChild(photoContainer);
+
+   
 
       var cardDetails = document.createElement('div');
       cardDetails.className = "cardDetails";
@@ -365,11 +367,13 @@ $(document).ready(function() {
         var restaurants = data[1];
         var location = data[0];
         map.setView([location.latitude, location.longitude], 10);
+    
+        $("#filterBar-side").prepend(foundMSG(restaurants));
         setMarkers(restaurants);
         renderAllPhotos(restaurants);
 
         $(".landing").hide('fast');
-        // $("#filterBar").show('slow');
+
         $("#resultsContainer").show('fast');
         }
        
@@ -382,6 +386,14 @@ $(document).ready(function() {
        allVals.push($(this).val());
      });
      return allVals;
+  }
+
+  function foundMSG(collection){
+    var para=document.createElement("p");
+    para.className = "found-msg"
+    var node=document.createTextNode(collection.length+ " restaurants found");
+    para.appendChild(node);
+    return para;
   }
 
   $(".navbar-form").submit(function(e) {

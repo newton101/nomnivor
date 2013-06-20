@@ -1,22 +1,25 @@
    <div id="resultsContainer">
-      <div id="filterBar">
-        <h5 class=filterHeader>Filter restaurants by diet: </h5>
-        <%= form_tag("/restaurants", :method => "get", :class => "diets-filter") do %>
-          <ul class="inline-checkboxes">
-           <% @diets.each do |diet| %>
-           <li>
-              <span>
-              <%= check_box_tag "diets[]", diet.id %>
-              <%= label_tag "#{diet.name}" %>
-              </span>
-           </li>
-          <% end %>
-          </ul>
-            <%= submit_tag("Find restaurants", :class => "sidebar-submit")%>
-        <% end %>
-      </div>
+      
       <div id="resultsView">
         <div id="results">
+
+          <div class="filterBar" id="filterBar-side">
+            <h5 class=filterHeader>Filter restaurants by diet: </h5>
+            <%= form_tag("/restaurants", :method => "get", :class => "diets-filter") do %>
+              <ul class="inline-checkboxes">
+               <% @diets.each do |diet| %>
+               <li>
+                  <span>
+                  <%= check_box_tag "diets[]", diet.id %>
+                  <%= label_tag "#{diet.name}" %>
+                  </span>
+               </li>
+              <% end %>
+              </ul>
+                <%= submit_tag("Search", :class => "sidebar-submit")%>
+            <% end %>
+        </div>
+
           <ul class="recommendationList">
          
           </ul>
