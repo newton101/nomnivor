@@ -343,10 +343,11 @@ $(document).ready(function() {
     $.ajax({
       type: "GET",
       url: "/locations/",
-      data: {"address": $("#bar_search_term").val(), "diets": checkedDiets()},
+      data: {"address": $("#bar_search_term").val(), "diets": $('.multiselect').val()},
       success: function(data){
         var restaurants = data[1];
         var location = data[0];
+
         map.setView([location.latitude, location.longitude], 10);
     
         $("#filterBar-side").prepend(foundMSG(restaurants));
@@ -355,7 +356,6 @@ $(document).ready(function() {
 
         $(".landing").hide('fast');
         $(".navbar-form").show('fast');
-
         $("#resultsContainer").show('fast');
 
         }
@@ -363,13 +363,15 @@ $(document).ready(function() {
     });
   });
 
-   function checkedDiets() {         
-     var allVals = [];
-     $(':checked').each(function() {
-       allVals.push($(this).val());
-     });
-     return allVals;
-  }
+  //  make array of checkbox values
+  //  function checkedDiets() {         
+  //    var allVals = [];
+  //    $(':checked').each(function(c) {
+  //     console.log(c);
+  //      allVals.push($(this).val());
+  //    });
+  //    return allVals;
+  // }
 
   function foundMSG(collection){
     var para=document.createElement("p");
