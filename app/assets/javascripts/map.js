@@ -16,11 +16,11 @@ $(document).ready(function() {
   createMap([51.5, -0.08],13);
 // b&w map: 4l7djmvo
   function createMap(ll, zoom) {
-    map = L.mapbox.map('map', 'examples.map-4l7djmvo').setView(ll, zoom);
+    map = L.mapbox.map('map', 'examples.map-uci7ul8p').setView(ll, zoom);
   }
 
 //create map $$$$ end
-// validation of restaurant form  
+// validation of restaurant form
 
   $('#submit').click(function (e) {
     if (nameValidation() == false ) {
@@ -72,15 +72,15 @@ $(document).ready(function() {
   //        group.addData(collection);
   //        // renderAllPhotos(data);
   //     ;}
-  // }); 
+  // });
 
   function renderAllPhotos(restaurants){
     var i = getVenueIds(restaurants);
-    
+
     $.each(restaurants, function(index, restaurant){
         createRestaurantCard(restaurant.name, restaurant.description);
         getVenuePhotos(restaurant.venue_id);
-        
+
     });
 
     setDataIdsAttribute(i);
@@ -96,16 +96,16 @@ $(document).ready(function() {
 
   function setDataIdsAttribute(array) {
     $.each(array, function(numi, num){
-        $('#results .card').each(function(ei, e){      
+        $('#results .card').each(function(ei, e){
             if (numi == ei && $(e).attr('data-id') == "") {
             $(e).attr('data-id', num);
-            }    
+            }
         });
     });
   }
 
   // needs major refactoring and now needs
-  // to prevent duplicate cards being created for same 
+  // to prevent duplicate cards being created for same
   // venue check for data-id attribute match
   function createRestaurantCard(name, description) {
       var card = document.createElement('li');
@@ -121,7 +121,7 @@ $(document).ready(function() {
       photoContainer.className = "photoContainer";
       card.appendChild(photoContainer);
 
-   
+
 
       var cardDetails = document.createElement('div');
       cardDetails.className = "cardDetails";
@@ -135,7 +135,7 @@ $(document).ready(function() {
   function getVenuePhotos(venue_id) {
     $.get("https://api.foursquare.com/v2/venues/"+venue_id+"/photos?&client_id=" + clientid +"&client_secret="+clientsec, function(json){
         if (json.response.photos.summary != "No photos") {
-            first_photo = json.response.photos.groups[1].items[1]; 
+            first_photo = json.response.photos.groups[1].items[1];
 
             var img = document.createElement('img');
             img.className = 'photo';
@@ -150,13 +150,13 @@ $(document).ready(function() {
             console.log(t);
             console.log(td);
             if (t == null && td != venue_id) {
-              $('#results .card[data-id='+venue_id+'] > .photoContainer').append(img); 
+              $('#results .card[data-id='+venue_id+'] > .photoContainer').append(img);
             }
         }
-    });  
+    });
   }
 
- 
+
 
   function createGeoJsonCollection(array){
     json_array = []
@@ -182,7 +182,7 @@ $(document).ready(function() {
     group.on('mouseover', function(e) {
        e.layer.openPopup();
     });
-  
+
     group.on('mouseout', function(e) {
        e.layer.closePopup();
     });
@@ -213,7 +213,7 @@ $(document).ready(function() {
         setMarkers(data);
         renderAllPhotos(data);
 
-        
+
         }
     });
   });
@@ -349,7 +349,7 @@ $(document).ready(function() {
         var location = data[0];
 
         map.setView([location.latitude, location.longitude], 10);
-    
+
         $("#filterBar-side").prepend(foundMSG(restaurants));
         setMarkers(restaurants);
         renderAllPhotos(restaurants);
@@ -359,12 +359,12 @@ $(document).ready(function() {
         $("#resultsContainer").show('fast');
 
         }
-       
+
     });
   });
 
   //  make array of checkbox values
-  //  function checkedDiets() {         
+  //  function checkedDiets() {
   //    var allVals = [];
   //    $(':checked').each(function(c) {
   //     console.log(c);
@@ -388,7 +388,7 @@ $(document).ready(function() {
       url: "/locations/",
       data: {"address": $("#search_term").val()},
       success: function(data){
-      
+
         map.setView([data.latitude, data.longitude], 15);
 
         $(".landing").hide('fast');
