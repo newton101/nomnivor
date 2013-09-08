@@ -1,3 +1,5 @@
+var map_loaded = false;
+
 $(document).ready(function() {
 
   var clientid = "F2TFZIIG0IVCY4UU3XZPMMK0YG5XKL5LDPSGWO3KRZWUD2GT";
@@ -16,7 +18,10 @@ $(document).ready(function() {
   createMap([51.5, -0.08],13);
 // b&w map: 4l7djmvo
   function createMap(ll, zoom) {
-    map = L.mapbox.map('map', 'examples.map-uci7ul8p').setView(ll, zoom);
+    if(!map_loaded){
+      map = L.mapbox.map('map', 'examples.map-uci7ul8p').setView(ll, zoom);
+      map_loaded = true;
+    }
   }
 
 //create map $$$$ end
