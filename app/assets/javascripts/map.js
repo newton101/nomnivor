@@ -10,7 +10,7 @@ $(document).ready(function() {
   $(".navbar-form").hide();
 
 // display map
-
+//
   var venues = [];
 
 
@@ -18,8 +18,9 @@ $(document).ready(function() {
   createMap([51.5, -0.08],13);
 // b&w map: 4l7djmvo
   function createMap(ll, zoom) {
+    console.log("createMap called");
     if(!map_loaded){
-      map = L.mapbox.map('map', 'examples.map-uci7ul8p').setView(ll, zoom);
+      map = L.mapbox.map('map', 'examples.map-9ijuk24y').setView(ll, zoom);
       map_loaded = true;
     }
   }
@@ -64,20 +65,6 @@ $(document).ready(function() {
     }
   }
 
-// validation of restaurant form $$$$ end
-// add markers and filter them
-
-  // $.ajax({
-  //   type: "GET",
-  //   url: "/restaurants/",
-  //   data: $(this).serialize(),
-  //   success: function(data){
-  //     var collection = createGeoJsonCollection(data);
-  //        group.clearLayers();
-  //        group.addData(collection);
-  //        // renderAllPhotos(data);
-  //     ;}
-  // });
 
   function renderAllPhotos(restaurants){
     var i = getVenueIds(restaurants);
@@ -109,9 +96,7 @@ $(document).ready(function() {
     });
   }
 
-  // needs major refactoring and now needs
-  // to prevent duplicate cards being created for same
-  // venue check for data-id attribute match
+  // needs major refactoring
   function createRestaurantCard(name, description) {
       var card = document.createElement('li');
       card.className = "card";
@@ -223,12 +208,6 @@ $(document).ready(function() {
     });
   });
 
-  // end filter diets
-
-// show diets $$$$ end
-// foursquare venues
-
-
 
  $('#name_auto_complete').keyup(function() {callFoursquareForTypeahead();
   });
@@ -236,7 +215,7 @@ $(document).ready(function() {
   $('#name_auto_complete').blur(function() {
     fillLatLngandId();
   });
-  // found out what source does
+
   function callFoursquareForTypeahead() {
     $('#name_auto_complete').typeahead({
         minLength: 3,
@@ -246,7 +225,8 @@ $(document).ready(function() {
         }
     });
   }
-  // find out what _map does
+
+
   function venueNames() {
     return _.map(venues, function(venue) { return displayName(venue) });
   }
@@ -269,7 +249,7 @@ $(document).ready(function() {
   function fillLatLngandId() {
     venueLatLngandId(venues);
   }
-  // what does this funtion do
+
   function venueLatLngandId(venues) {
     _.each(venues, function(venue){
       if (displayName(venue) == $('#name_auto_complete').val()) {
@@ -280,7 +260,7 @@ $(document).ready(function() {
     })
   }
 
-// foursquare venues $$$$ end
+
 // geolocation for find me
 
   $(".find_me").click(function() {
@@ -310,13 +290,14 @@ $(document).ready(function() {
 
 
   // Location find automcomplete using Google Maps API
+
   var input = document.getElementById('search_term');
     autocomplete = new google.maps.places.Autocomplete(input);
 
    var input = document.getElementById('bar_search_term');
     autocomplete = new google.maps.places.Autocomplete(input);
 
-  //Automcomplete using Gmaps $$$$ end
+  //Automcomplete using Gmaps
 
     $('.multiselect').multiselect({
       buttonClass: 'btn',
@@ -368,15 +349,6 @@ $(document).ready(function() {
     });
   });
 
-  //  make array of checkbox values
-  //  function checkedDiets() {
-  //    var allVals = [];
-  //    $(':checked').each(function(c) {
-  //     console.log(c);
-  //      allVals.push($(this).val());
-  //    });
-  //    return allVals;
-  // }
 
   function foundMSG(collection){
     var para=document.createElement("p");
@@ -398,13 +370,10 @@ $(document).ready(function() {
 
         $(".landing").hide('fast');
 
-        // $("#filterBar").show('slow');
         $("#resultsContainer").show('slow');
-        // renderAllPhotos(data);
 
         }
     });
   });
 
-  // location finder $$$$ end
 });

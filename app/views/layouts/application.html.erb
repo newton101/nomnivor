@@ -3,7 +3,7 @@
   <head>
     <title>Nomnivor</title>
     <link href='http://fonts.googleapis.com/css?family=Nunito:400,700' rel='stylesheet' type='text/css'>
-    <%= stylesheet_link_tag    "application", :media => "all" %>
+    <%= stylesheet_link_tag "application", :media => "all" %>
      <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css" />
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
      <script src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script>
@@ -43,7 +43,7 @@
 
     <%= render "restaurants/side_bar" %>
 
-    <div id='map' >
+    <div id='map'>
         <% if flash[:notice] %>
           <div class="alert alert-success">
             <button type="button" class="close" data-dis  miss="alert" aria-hidden="true">×</button>
